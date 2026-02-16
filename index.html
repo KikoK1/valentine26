@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <title>For You</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a001f, #3b003b, #1a001f);
+            font-family: 'Inter', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Soft floating */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #ff69b433, transparent 70%);
+            filter: blur(100px);
+            animation: float 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes float {
+            from {
+                transform: translate(-150px, -150px);
+            }
+
+            to {
+                transform: translate(150px, 150px);
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 2;
+            max-width: 700px;
+            padding: 40px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            opacity: 0.75;
+            font-size: 18px;
+            margin-bottom: 50px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            position: relative;
+        }
+
+        .btn {
+            padding: 14px 45px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background: #ff4d8d;
+            border: none;
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 77, 141, 0.4);
+        }
+
+        #yesBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 77, 141, 0.6);
+        }
+
+        #noBtn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Hey, Naing Gyi ... <br/>Will you be my Valentine?</h1>
+        <div class="subtitle">
+            Rejection is no option, wrr hrr hrr ...
+        </div>
+
+        <div class="buttons">
+            <button id="yesBtn" class="btn">Yes</button>
+            <button id="noBtn" class="btn">No</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById("noBtn");
+        let offsetX = 120;
+        let offsetY = 0;
+
+        noBtn.style.left = offsetX + "px";
+        noBtn.style.top = offsetY + "px";
+
+        document.addEventListener("mousemove", (e) => {
+            const rect = noBtn.getBoundingClientRect();
+            const dx = e.clientX - (rect.left + rect.width / 2);
+            const dy = e.clientY - (rect.top + rect.height / 2);
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 120) {
+                offsetX -= dx * 0.3;
+                offsetY -= dy * 0.3;
+
+                offsetX = Math.max(-150, Math.min(150, offsetX));
+                offsetY = Math.max(-80, Math.min(80, offsetY));
+
+                noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            }
+        });
+
+        document.getElementById("yesBtn").addEventListener("click", () => {
+            document.body.style.transition = "opacity 0.6s";
+            document.body.style.opacity = "0";
+            setTimeout(() => {
+                window.location.href = "love.html";
+            }, 600);
+        });
+    </script>
+
+</body>
+
+</html>
